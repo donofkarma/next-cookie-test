@@ -1,16 +1,19 @@
 .container {
-  padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 0 0.5rem;
 }
 
 .main {
-  padding: 5rem 0;
+  padding: 5rem 1rem;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 600px;
 }
 
 .title {
@@ -74,4 +77,10 @@
 }
 .button:hover, .button:focus {
   background: #ededed;
+}
+
+.pokemon {
+  display: block;
+  width: auto;
+  max-width: 100%;
 }
