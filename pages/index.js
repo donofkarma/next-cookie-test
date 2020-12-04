@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import Head from 'next/head';
+import throttle from 'lodash.throttle';
 
 import { COOKIE_NAME } from '../constants/app';
 import styles from '../styles/Home.module.css'
@@ -9,11 +10,12 @@ const Home = ({ id }) => {
   const [newValue, setNewValue] = useState('');
   const [pokemon, setPokemon] = useState(null);
 
-  const fetchPoke = async (pokeId) => {
+  const fetchPoke = async () => {
     try {
+      const pokeId = Math.floor(Math.random() * 150) + 1;
       const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokeId}`);
       const { name, sprites } = await res.json();
-  
+
       setPokemon({
         image: sprites?.other?.['official-artwork'].front_default,
         name,
@@ -23,11 +25,7 @@ const Home = ({ id }) => {
     }
   }
 
-  const handlefetchPokeClick = async () => {
-    const pokeId = Math.floor(Math.random() * 150) + 1;
-
-    fetchPoke(pokeId);
-  }
+  const handleFetchPoke = useCallback(throttle(() => fetchPoke(), 1000, { trailing: false }), []);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -96,7 +94,7 @@ const Home = ({ id }) => {
 
               <p>Opening up DevTools and inspecting the request should show that the cookie value set above is not passed with the request. However setting a new value will pass the current cookie value as that API is within the same domain.</p>
 
-              <button className={styles.button} type="button" onClick={handlefetchPokeClick}>Fetch me a Pokémon!</button>
+              <button className={styles.button} type="button" onClick={handleFetchPoke}>Fetch me a Pokémon!</button>
             </div>
             
             {pokemon && (
