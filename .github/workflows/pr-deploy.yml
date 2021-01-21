@@ -28,6 +28,7 @@ jobs:
       - name: Trigger Vercel build
         uses: amondnet/vercel-action@v20
         with:
+          github-comment: "Preview available at: https://next-cookie-test-{{ BRANCH }}.vercel.app"
           github-token: ${{ secrets.GITHUB_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
